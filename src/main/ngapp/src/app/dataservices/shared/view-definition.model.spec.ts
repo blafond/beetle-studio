@@ -32,7 +32,11 @@ describe("ViewDefinition", () => {
               "type": "INNER_JOIN",
               "operator": "EQ"
             }
-          ]
+          ],
+        "projectedColumns": {
+          "default": true,
+          "columns": []
+        }
       }
     );
 

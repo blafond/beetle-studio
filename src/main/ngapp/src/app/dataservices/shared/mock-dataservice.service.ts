@@ -151,10 +151,10 @@ export class MockDataserviceService extends DataserviceService {
   }
 
   /**
-   * @param {ViewEditorState} editorState the view editor state
+   * @param {ViewEditorState[]} editorStates the view editor state array
    * @returns {Observable<boolean>} `true` if the editor state was successfully saved
    */
-  public saveViewEditorState( editorState: ViewEditorState ): Observable< boolean > {
+  public saveViewEditorStates( editorStates: ViewEditorState[] ): Observable< boolean > {
     return Observable.of(true);
   }
 
@@ -199,11 +199,11 @@ export class MockDataserviceService extends DataserviceService {
   }
 
   /**
-   * @param {ViewEditorState} editorState the view editor state
+   * @param {ViewEditorState[]} editorStates the view editor state array
    * @param {string} dataserviceName the name of the dataservice
    * @returns {Observable<boolean>} `true` if the editor state was successfully saved
    */
-  public saveViewEditorStateRefreshViews( editorState: ViewEditorState, dataserviceName: string ): Observable< boolean > {
+  public saveViewEditorStatesRefreshViews( editorStates: ViewEditorState[], dataserviceName: string ): Observable< boolean > {
     return Observable.of(true);
   }
 

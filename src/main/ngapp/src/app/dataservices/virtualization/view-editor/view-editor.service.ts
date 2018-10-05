@@ -44,6 +44,7 @@ import { DataserviceService } from "@dataservices/shared/dataservice.service";
 import { SelectionService } from "@core/selection.service";
 import { CommandType } from "@dataservices/virtualization/view-editor/command/command-type.enum";
 import { NoOpCommand } from "@dataservices/virtualization/view-editor/command/no-op-command";
+import { UpdateProjectedColumnsCommand } from "@dataservices/virtualization/view-editor/command/update-projected-columns-command";
 
 @Injectable()
 export class ViewEditorService {
@@ -669,6 +670,10 @@ export class ViewEditorService {
         this.getEditorView().setName( cmd.getArg( UpdateViewNameCommand.newName ) );
         break;
       }
+      case UpdateProjectedColumnsCommand.id: {
+        this.getEditorView().setProjectedColumns( cmd.getArg( UpdateProjectedColumnsCommand.newProjectedColumns ) );
+        break;
+      }
       default: {
         this._logger.error( "The '" + cmd.id + "' was not handled by updateViewState");
         break;
@@ -748,6 +753,8 @@ export class ViewEditorService {
         return UpdateViewDescriptionCommand.id;
       } else if ( argStr.startsWith(UpdateViewNameCommand.id) ) {
         return UpdateViewNameCommand.id;
+      } else if ( argStr.startsWith(UpdateProjectedColumnsCommand.id) ) {
+        return UpdateProjectedColumnsCommand.id;
       }
     }
 

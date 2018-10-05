@@ -1,0 +1,7 @@
+/*
+ * The container for the projected columns editor
+ */
+#projected-columns-editor-container {
+  height: 100%;
+  margin-left: 15px;
+}

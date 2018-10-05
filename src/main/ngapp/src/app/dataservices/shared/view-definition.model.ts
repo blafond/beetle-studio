@@ -20,6 +20,7 @@ import { PathUtils } from "@dataservices/shared/path-utils";
 import { VdbsConstants } from "@dataservices/shared/vdbs-constants";
 import { CompositionOperator } from "@dataservices/shared/composition-operator.enum";
 import { CompositionType } from "@dataservices/shared/composition-type.enum";
+import { ProjectedColumns } from "@dataservices/shared/projected-columns.model";
 
 /**
  * ViewDefinition model
@@ -31,6 +32,7 @@ export class ViewDefinition {
   private sourcePaths: string[] = [];
   private compositions: Composition[] = [];
   private isSelected = false;
+  private projectedColumns: ProjectedColumns = new ProjectedColumns();
 
   /**
    * @param {Object} json the JSON representation of a ViewDefinition
@@ -59,6 +61,9 @@ export class ViewDefinition {
             viewDefn.addComposition(comp);
           }
         }
+      } else if (field === "projectedColumns") {
+        const projCols = ProjectedColumns.create(json[field]);
+        viewDefn.setProjectedColumns(projCols);
       }
     }
     return viewDefn;
@@ -122,6 +127,20 @@ export class ViewDefinition {
    */
   public setCompositions( compositions: Composition[] = [] ): void {
     this.compositions = compositions;
+  }
+
+  /**
+   * @returns {ProjectedColumns} the view projected columns
+   */
+  public getProjectedColumns(): ProjectedColumns {
+    return this.projectedColumns;
+  }
+
+  /**
+   * @param {ProjectedColumns} projColumns the projected columns
+   */
+  public setProjectedColumns( projColumns: ProjectedColumns ): void {
+    this.projectedColumns = projColumns;
   }
 
   /**
@@ -358,7 +377,8 @@ export class ViewDefinition {
     if (this.getName() === otherView.getName() &&
         this.getDescription() === otherView.getDescription() &&
         this.pathsEqual(this.getSourcePaths(), otherView.getSourcePaths()) &&
-        this.compositionsEqual(this.getCompositions(), otherView.getCompositions()) ) {
+        this.compositionsEqual(this.getCompositions(), otherView.getCompositions()) &&
+        this.getProjectedColumns().isEqual(otherView.getProjectedColumns()) ) {
       equal = true;
     }
     return equal;
@@ -407,7 +427,8 @@ export class ViewDefinition {
       keng__description: this.keng__description,
       isComplete: this.complete,
       sourcePaths: this.sourcePaths,
-      compositions: this.compositions
+      compositions: this.compositions,
+      projectedColumns: this.projectedColumns
     };
   }
 

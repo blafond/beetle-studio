@@ -1,0 +1,21 @@
+<div id="projected-columns-editor-container">
+  <div *ngIf="!hasSelectedView">
+    <h3>No View Selected</h3>
+  </div>
+
+  <div *ngIf="hasSelectedView">
+    <h3>View Columns</h3>
+    <div id="views-table" class="col-md-12" *ngIf="columnsLoadedSuccess">
+      {{columnsSql}}
+      <pfng-table
+        [columns]="tableColumns"
+        [config]="tableConfig"
+        (onSelectionChange)="handleColumnSelectionChange($event)"
+        [rows]="projectedColumns">
+      </pfng-table>
+    </div>
+    <div class="col-md-12" *ngIf="columnsLoading">
+      <div class="spinner spinner-lg blank-slate-pf-icon"></div>
+    </div>
+  </div>
+</div>
